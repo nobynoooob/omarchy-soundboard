@@ -21,9 +21,10 @@ import subprocess
 import sys
 
 AUDIO_EXTS = {".mp3", ".wav", ".ogg", ".oga", ".flac", ".opus", ".m4a"}
+CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
 CONFIG_PATH = os.environ.get(
     "SBOARD_CONFIG",
-    os.path.expanduser("~/.config/omarchy/plugins/soundboard/config.json"),
+    os.path.join(CONFIG_HOME, "omarchy/plugins/soundboard/config.json"),
 )
 STATE_DIR = os.environ.get(
     "SBOARD_STATE_DIR", os.path.expanduser("~/.local/state/omarchy-soundboard")

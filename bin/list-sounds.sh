@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # list-sounds.sh — emit the sounds directory as a JSON array.
 set -u
-SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$HOME/.config/omarchy/plugins/soundboard/sounds}"
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$CONFIG_HOME/omarchy/plugins/soundboard/sounds}"
 mkdir -p "$SOUNDS_DIR"
 
 json_escape() {

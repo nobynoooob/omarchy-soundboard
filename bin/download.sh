@@ -2,7 +2,8 @@
 # download.sh URL [NAME] — pull audio into the sounds dir via yt-dlp or curl.
 # stdout: final line "ok <filename>" on success, "error <message>" on failure.
 set -u
-SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$HOME/.config/omarchy/plugins/soundboard/sounds}"
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$CONFIG_HOME/omarchy/plugins/soundboard/sounds}"
 GAIN_SCRIPT="$(cd "$(dirname "$0")" && pwd)/clip-gain.py"
 URL="$1"
 NAME="${2:-}"

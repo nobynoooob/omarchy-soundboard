@@ -6,7 +6,8 @@
 # stripped and the clip's real extension is kept.
 set -u
 
-SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$HOME/.config/omarchy/plugins/soundboard/sounds}"
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$CONFIG_HOME/omarchy/plugins/soundboard/sounds}"
 old="${1:-}"
 new="${2:-}"
 

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # delete-sound.sh NAME — remove a clip from the sounds dir (basename-guarded).
 set -u
-SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$HOME/.config/omarchy/plugins/soundboard/sounds}"
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$CONFIG_HOME/omarchy/plugins/soundboard/sounds}"
 name="${1:-}"
 [ -n "$name" ] || { echo "error no name" >&2; exit 1; }
 name=$(basename "$name") # no traversal

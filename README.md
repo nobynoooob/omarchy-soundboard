@@ -111,6 +111,9 @@ After changing `clipTargetLufs`, delete
   source, and default-source changes do not relink running streams.
 - `bin/play.sh` auto-picks a player (`mpv` → `ffplay` → `pw-cat`) and targets
   the board sink. `bin/stop-all.sh` reaps every running clip.
+- The virtual mic's monitor, which is the actual recording tap, is held at 100%
+  while clips play, so an app changing the source volume cannot undo the
+  per-clip gain.
 
 ## Hyprland rule
 

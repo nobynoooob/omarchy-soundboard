@@ -2,7 +2,8 @@
 # import-file.sh SRC... — copy dropped files into the sounds dir.
 # stdout: one line per file: "ok <name>" / "error <msg>"
 set -u
-SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$HOME/.config/omarchy/plugins/soundboard/sounds}"
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+SOUNDS_DIR="${SBOARD_SOUNDS_DIR:-$CONFIG_HOME/omarchy/plugins/soundboard/sounds}"
 GAIN_SCRIPT="$(cd "$(dirname "$0")" && pwd)/clip-gain.py"
 mkdir -p "$SOUNDS_DIR"
 

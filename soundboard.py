@@ -24,13 +24,14 @@ from gi.repository import Gdk, GLib, Gtk  # noqa: E402
 APP_ID = "nobynoooob.soundboard"
 PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
 BIN = os.path.join(PLUGIN_DIR, "bin")
+CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
 SOUNDS_DIR = os.environ.get(
     "SBOARD_SOUNDS_DIR",
-    os.path.expanduser("~/.config/omarchy/plugins/soundboard/sounds"),
+    os.path.join(CONFIG_HOME, "omarchy/plugins/soundboard/sounds"),
 )
 CONFIG_PATH = os.environ.get(
     "SBOARD_CONFIG",
-    os.path.expanduser("~/.config/omarchy/plugins/soundboard/config.json"),
+    os.path.join(CONFIG_HOME, "omarchy/plugins/soundboard/config.json"),
 )
 STATE_DIR = os.environ.get(
     "SBOARD_STATE_DIR",
