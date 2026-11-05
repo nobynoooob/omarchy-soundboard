@@ -42,8 +42,6 @@ warn() { printf 'warning: %s\n' "$*" >&2; }
 missing=()
 recommended=()
 
-has_pkg() { pacman -Qq "$1" >/dev/null 2>&1; }
-
 check_required() {
   local pkg="$1" probe="$2" label="$3"
   if eval "$probe" >/dev/null 2>&1; then
@@ -64,7 +62,7 @@ check_optional() {
 
 if (( ! SKIP_DEPS )); then
   say "Checking dependencies:"
-  check_required pipewire-pulse "pactl info" "PipeWire PulseAudio bridge"
+  check_required pipewire-pulse "pactl info | grep -qi 'PipeWire'" "PipeWire PulseAudio bridge"
   check_required python-gobject "python3 -c 'import gi'" "GTK window (PyGObject)"
   check_required gtk3 "python3 -c 'import gi; gi.require_version(\"Gtk\", \"3.0\")'" "GTK3 runtime"
   check_required yt-dlp "command -v yt-dlp" "URL imports"
@@ -92,7 +90,7 @@ if (( ! SKIP_DEPS )); then
     printf '\nRecommended packages:\n  sudo pacman -S --needed %s\n' "${recommended[*]}"
   fi
 
-  if ! has_pkg pipewire-pulse && ! pactl info >/dev/null 2>&1; then
+  if ! pactl info 2>/dev/null | grep -qi 'PipeWire'; then
     warn "PipeWire does not look reachable; the virtual mic will not work."
   fi
 fi

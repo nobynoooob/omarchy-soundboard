@@ -173,6 +173,8 @@ omarchy-soundboard/
 ├── soundboard.py            # persistent GTK3 window (drag-drop, URL, grid)
 ├── install.sh               # optional dependency check + setup
 ├── waybar_config.json       # optional Waybar custom-module snippet
+├── .gitignore
+├── LICENSE
 ├── bin/
 │   ├── audio_router.sh      # sinks, loopbacks, watcher, status
 │   ├── sb-bridge.py         # on-demand pw-link stream bridging
