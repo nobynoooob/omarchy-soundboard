@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "nobynoooob.soundboard",
+  "name": "Omarchy Soundboard",
+  "version": "1.0.0",
+  "author": "nobynoooob",
+  "license": "MIT",
+  "description": "Dynamic soundboard with PipeWire mic loopback, drag-and-drop support, and Waybar popup integration.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Soundboard",
+    "description": "Play clips into your microphone stream (plus local monitoring), with drag-and-drop and URL download",
+    "category": "Audio",
+    "aliases": [
+      "soundboard",
+      "mic-soundboard",
+      "sfx"
+    ],
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "gridColumns": 3
+    },
+    "schema": [
+      {
+        "key": "gridColumns",
+        "type": "integer",
+        "label": "Grid columns",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "defaultValue": 3,
+        "description": "Columns in the sound grid. Volume, monitor and router state live in the plugin's own config.json."
+      }
+    ]
+  }
+}

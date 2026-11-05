@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments / local tooling
+.venv/
+venv/
+env/
+ENV/
+node_modules/
+
+# Local clips and caches (never commit user audio)
+sounds/
+*.mp3
+*.wav
+*.ogg
+*.oga
+*.flac
+*.opus
+*.m4a
+gains/
+*.log
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
