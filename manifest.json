@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "nobynoooob",
   "license": "MIT",
-  "description": "Dynamic soundboard with PipeWire mic loopback, drag-and-drop support, and Waybar popup integration.",
+  "description": "Dynamic soundboard with PipeWire mic loopback, drag-and-drop support, and Quickshell bar popup integration.",
   "kinds": [
     "bar-widget"
   ],
