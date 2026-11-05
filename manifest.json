@@ -22,21 +22,6 @@
       "sfx"
     ],
     "allowMultiple": false,
-    "defaultSection": "right",
-    "defaults": {
-      "gridColumns": 3
-    },
-    "schema": [
-      {
-        "key": "gridColumns",
-        "type": "integer",
-        "label": "Grid columns",
-        "min": 2,
-        "max": 6,
-        "step": 1,
-        "defaultValue": 3,
-        "description": "Columns in the sound grid. Volume, monitor and router state live in the plugin's own config.json."
-      }
-    ]
+    "defaultSection": "right"
   }
 }

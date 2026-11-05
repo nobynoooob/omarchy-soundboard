@@ -77,7 +77,6 @@ perceived level instead of one sounding distant and the next clipping.
   "autoSetup": true,
   "monitorLocal": true,
   "masterVolume": 100,
-  "gridColumns": 3,
   "clipTargetLufs": -16.0
 }
 ```
@@ -198,7 +197,7 @@ Storage:
 | Path | Purpose |
 |---|---|
 | `~/.config/omarchy/plugins/soundboard/sounds/` | clips |
-| `~/.config/omarchy/plugins/soundboard/config.json` | volume, monitor, columns, `clipTargetLufs` |
+| `~/.config/omarchy/plugins/soundboard/config.json` | volume, monitor, `clipTargetLufs` |
 | `~/.local/state/omarchy-soundboard/` | pids, `watch.log`, `moved.tsv`, `gains/` |
 
 Environment overrides: `SBOARD_SOUNDS_DIR`, `SBOARD_CONFIG`,

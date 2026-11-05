@@ -5,11 +5,6 @@ import Quickshell.Io
 Item {
   id: root
 
-  // Optional host references. The bar widget loads this component directly, so
-  // neither is required; they stay declared for reuse under a service plugin.
-  property var shell: null
-  property var manifest: null
-
   readonly property string homeDir: Quickshell.env("HOME")
   readonly property string configHome: Quickshell.env("XDG_CONFIG_HOME") || homeDir + "/.config"
   readonly property string pluginPath: resolvedLocalPath(".")
@@ -25,7 +20,6 @@ Item {
   property bool autoSetup: true
   property bool monitorLocal: true
   property int masterVolume: 80
-  property int gridColumns: 3
   property real clipTargetLufs: -16.0
 
   // ---- runtime state
@@ -84,7 +78,6 @@ Item {
     autoSetup = parsed.autoSetup === undefined ? true : !!parsed.autoSetup
     monitorLocal = parsed.monitorLocal === undefined ? true : !!parsed.monitorLocal
     masterVolume = clampVolume(parsed.masterVolume, 80)
-    gridColumns = clampInt(parsed.gridColumns, 2, 6, 3)
     clipTargetLufs = clampLufs(parsed.clipTargetLufs, -16.0)
     settingsLoaded = true
     maybeAutoSetup()
@@ -108,7 +101,6 @@ Item {
       autoSetup: root.autoSetup,
       monitorLocal: root.monitorLocal,
       masterVolume: root.masterVolume,
-      gridColumns: root.gridColumns,
       clipTargetLufs: root.clipTargetLufs
     }, null, 2) + "\n")
   }
@@ -123,12 +115,6 @@ Item {
     var numeric = Number(value)
     if (!isFinite(numeric)) numeric = fallback
     return Math.max(-24, Math.min(-10, numeric))
-  }
-
-  function clampInt(value, min, max, fallback) {
-    var numeric = Number(value)
-    if (!isFinite(numeric)) numeric = fallback
-    return Math.max(min, Math.min(max, Math.round(numeric)))
   }
 
   // ------------------------------------------------------------------ sounds

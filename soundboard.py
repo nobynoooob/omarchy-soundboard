@@ -104,7 +104,6 @@ def load_config():
         "autoSetup": True,
         "monitorLocal": True,
         "masterVolume": 80,
-        "gridColumns": 3,
         "clipTargetLufs": -16.0,
     }
     try:
