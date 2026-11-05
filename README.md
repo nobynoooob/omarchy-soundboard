@@ -43,7 +43,7 @@ sudo pacman -S pipewire-pulse python-gobject gtk3 yt-dlp mpv ffmpeg curl
 ```
 
 Omarchy already ships PipeWire, Hyprland, and `omarchy-shell`. The plugin is a
-native bar widget; Waybar support is optional.
+native Quickshell bar widget.
 
 ## Usage
 
@@ -130,24 +130,6 @@ o.window("nobynoooob.soundboard", {
 })
 ```
 
-## Waybar (optional)
-
-Stock Omarchy runs `omarchy-shell` with the native QML widget. If you use
-Waybar instead, merge [`waybar_config.json`](waybar_config.json) into your
-config and append the CSS snippet to `style.css`.
-
-- The module emits JSON classes: `inactive` (off), `armed` (mic untouched),
-  `engaged` (clips bridged).
-- Left-click opens the window, right-click arms/disarms the router, middle-click
-  stops all clips, and scrolling changes the master volume.
-- Waybar caches `"interval": 0` output. Refresh it after edits:
-
-  ```bash
-  ~/.config/omarchy/plugins/nobynoooob.soundboard/bin/reload-waybar.sh
-  ```
-
-  The router already signals Waybar on arm, play, release, and volume changes.
-
 ## Troubleshooting
 
 - **Nothing plays** — `bin/audio_router.sh status`. If `"active":false` or
@@ -174,7 +156,6 @@ omarchy-soundboard/
 ├── Service.qml              # engine/state: scripts, config, status polling
 ├── soundboard.py            # persistent GTK3 window (drag-drop, URL, grid)
 ├── install.sh               # optional dependency check + setup
-├── waybar_config.json       # optional Waybar custom-module snippet
 ├── .gitignore
 ├── LICENSE
 ├── bin/
@@ -189,9 +170,7 @@ omarchy-soundboard/
 │   ├── rename-sound.sh      # rename a clip, keep its extension
 │   ├── delete-sound.sh      # remove a clip
 │   ├── open-sounds-dir.sh   # open the clips folder
-│   ├── toggle-soundboard.sh # open/close the window
-│   ├── reload-waybar.sh     # refresh/restart Waybar
-│   └── sb-waybar-status.sh  # Waybar JSON status
+│   └── toggle-soundboard.sh # open/close the window
 └── README.md
 ```
 

@@ -27,8 +27,6 @@ mkdir -p "$STATE_DIR"
 
 log() { printf '%s\n' "$*" >&2; }
 die() { log "soundboard: $*"; exit 1; }
-# Waybar caches custom-module output; nudge it so icon/state changes show now.
-refresh_waybar() { pkill -RTMIN+7 -x waybar 2>/dev/null || true; }
 
 # Serialize mutating commands: the shell can fire several setup calls at once
 # (service reloads) and concurrent module loads race into duplicates.
@@ -206,7 +204,6 @@ cmd_watch() {
     : >"$STATE_DIR/engaged"
     log "$(date +%T) engaged"
     engage_streams
-    refresh_waybar
   fi
 
   while IFS= read -r event; do
@@ -220,7 +217,6 @@ cmd_watch() {
         engaged=1
         : >"$STATE_DIR/engaged"
         log "$(date +%T) engaged"
-        refresh_waybar
       fi
       engage_streams
     elif [ "$engaged" = 1 ]; then
@@ -230,7 +226,6 @@ cmd_watch() {
         rm -f "$STATE_DIR/engaged"
         release_streams
         log "$(date +%T) released"
-        refresh_waybar
       fi
     fi
   done <"$fifo"
@@ -295,7 +290,6 @@ cmd_setup() {
 
   start_watcher
   log "soundboard: armed — mic stays '$mic'; clips bridge on demand"
-  refresh_waybar
 }
 
 cmd_teardown() {
@@ -313,7 +307,6 @@ cmd_teardown() {
     timeout 3 pactl unload-module "$id" 2>/dev/null
   done
   log "soundboard: torn down — hardware mic untouched"
-  refresh_waybar
 }
 
 cmd_monitor() {
@@ -325,12 +318,10 @@ cmd_monitor() {
       default_sink=$(timeout 3 pactl get-default-sink 2>/dev/null)
       start_loopback monitor "$BOARD_SINK.monitor" "$default_sink"
       log "soundboard: local monitor on"
-      refresh_waybar
       ;;
     off)
       stop_loopback "$BOARD_SINK.monitor" "$(timeout 3 pactl get-default-sink 2>/dev/null)"
       log "soundboard: local monitor off"
-      refresh_waybar
       ;;
     *) die "usage: audio_router.sh monitor on|off" ;;
   esac
@@ -351,7 +342,6 @@ cmd_volume() {
   pct=$(( pct < 0 ? 0 : pct > 100 ? 100 : pct ))
   timeout 3 pactl set-sink-volume "$BOARD_SINK" "${pct}%" || die "playback sink not present"
   log "soundboard: master volume ${pct}%"
-  refresh_waybar
 }
 
 cmd_is_active() {
