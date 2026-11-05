@@ -13,7 +13,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLUGIN_ID="nobynoooob.soundboard"
-DATA_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/plugins/soundboard"
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+PLUGINS_DIR="$CONFIG_HOME/omarchy/plugins"
+DATA_DIR="$PLUGINS_DIR/soundboard"
 SOUNDS_DIR="$DATA_DIR/sounds"
 
 INSTALL_DEPS=0
@@ -104,7 +106,7 @@ say "  clips directory: $SOUNDS_DIR"
 # No compiled assets in this plugin; QML and Python are loaded from source.
 say "  assets: none to build"
 
-if [[ "$ROOT" == *"/.config/omarchy/plugins/"* ]]; then
+if [[ "$ROOT" == "$PLUGINS_DIR/"* ]]; then
   if command -v omarchy-shell >/dev/null 2>&1; then
     omarchy-shell shell rescanPlugins >/dev/null 2>&1 || true
     say "  omarchy-shell rescanned"
