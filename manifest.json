@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "nobynoooob.soundboard",
   "name": "Omarchy Soundboard",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "nobynoooob",
   "license": "MIT",
   "description": "Dynamic soundboard with PipeWire mic loopback, drag-and-drop support, and Quickshell bar popup integration.",

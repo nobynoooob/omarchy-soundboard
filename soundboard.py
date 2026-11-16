@@ -14,6 +14,7 @@ import shutil
 import signal
 import subprocess
 import threading
+import unicodedata
 import urllib.parse
 
 import gi
@@ -98,6 +99,12 @@ def load_theme():
     except (OSError, re.error):
         pass
     return colors
+
+
+def fold(text):
+    """Case- and accent-insensitive key, so 'café' matches 'cafe'."""
+    norm = unicodedata.normalize("NFKD", text.casefold())
+    return "".join(ch for ch in norm if not unicodedata.combining(ch))
 
 
 def load_config():
@@ -222,6 +229,7 @@ class SoundboardWindow(Gtk.Window):
                      font-family: "JetBrainsMono Nerd Font", "Noto Naskh Arabic",
                                   "Noto Kufi Arabic", sans-serif; }}
             entry:focus {{ border-color: {rgba(t['accent'], 0.8)}; }}
+            entry image {{ color: {t['muted']}; }}
             .sound-cell {{ background: {t['lighter_background']}; color: {t['foreground']};
                            border: 1px solid {rgba(t['foreground'], 0.10)};
                            border-radius: 8px; padding: 8px 10px;
@@ -300,6 +308,14 @@ class SoundboardWindow(Gtk.Window):
         url_row.pack_start(self.url_entry, True, True, 0)
         url_row.pack_start(dl, False, False, 0)
         outer.pack_start(url_row, False, False, 6)
+
+        search_row = Gtk.Box(margin_start=12, margin_end=12)
+        self.search_entry = Gtk.SearchEntry()
+        self.search_entry.set_placeholder_text("Search clips…")
+        self.search_entry.set_tooltip_text("Filter clips by name (Ctrl+F)")
+        self.search_entry.connect("search-changed", lambda _e: self.refresh_sounds())
+        search_row.pack_start(self.search_entry, True, True, 0)
+        outer.pack_start(search_row, False, False, 0)
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
@@ -581,11 +597,19 @@ class SoundboardWindow(Gtk.Window):
             )
         except OSError:
             names = []
+        query = self.search_entry.get_text().strip()
+        if query:
+            terms = [t for t in fold(query).split() if t]
+            names = [n for n in names if all(t in fold(n) for t in terms)]
         if not names:
-            hint = Gtk.Label(label="No clips yet — drop files above or download a URL.")
-            hint.get_style_context().add_class("panel-sub")
-            hint.set_margin_top(8)
-            self.flow.add(hint)
+            hint = (f"No clips match “{query}”." if query
+                    else "No clips yet — drop files above or download a URL.")
+            label = Gtk.Label(label=hint)
+            label.get_style_context().add_class("panel-sub")
+            label.set_margin_top(8)
+            label.set_line_wrap(True)
+            label.set_justify(Gtk.Justification.CENTER)
+            self.flow.add(label)
         else:
             for name in names:
                 self.flow.add(SoundCell(name, self))
@@ -593,7 +617,15 @@ class SoundboardWindow(Gtk.Window):
         return False
 
     def on_key(self, _w, event):
+        if (event.state & Gdk.ModifierType.CONTROL_MASK
+                and event.keyval in (Gdk.KEY_f, Gdk.KEY_F)):
+            self.search_entry.grab_focus()
+            self.search_entry.select_region(0, -1)
+            return True
         if event.keyval == Gdk.KEY_Escape:
+            if self.search_entry.get_text():
+                self.search_entry.set_text("")
+                return True
             self.destroy()
             return True
         return False

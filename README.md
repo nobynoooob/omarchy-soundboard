@@ -52,6 +52,8 @@ native Quickshell bar widget.
 - **Scroll over the icon** — master volume (0–100%).
 - **Click a cell** — play a clip. Multiple clips overlap; *Stop All* clears
   everything.
+- **Search** — type in the search box to filter clips; `Ctrl+F` focuses it and
+  `Esc` clears the filter before closing the window.
 - **Drag MP3/WAV/OGG/FLAC/OPUS/M4A files** from any file manager onto the
   window. Drop several at once; Unicode and Arabic filenames are preserved.
 - **Paste a URL** — YouTube links go through `yt-dlp`, direct audio links
